@@ -16,6 +16,10 @@
 
 #include <Arrays\ArrayInt.mqh>
 #include "inc\structs.mqh";
+#include "inc\CSignal.mqh";
+
+
+
 #include "inc\dictionary.mqh" 
 #include "inc\trademgr.mqh"   
 #include "inc\citems.mqh"     
@@ -37,15 +41,8 @@ extern string    strUseOsMaDivStochEntryH1  = "osMa Divergence + stoch entry H1"
 extern bool      isUseOsMaDivStochEntryH1   = true;
 
 
+CSignal* oSignal = NULL;
 
-int       NumberOfTries   = 10,
-          Slippage        = 5;
-datetime  CheckTimeM5;
-double    Pip;
-
-CTradeMgr *objCTradeMgr;         
-CDictionary *objDict = NULL;     
-int tmp = 0;
 
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
@@ -54,13 +51,9 @@ int OnInit()
 {
 //---
    Print("begin");
-   if(Digits==2 || Digits==4) Pip = Point;
-   else if(Digits==3 || Digits==5) Pip = 10*Point;
-   else if(Digits==6) Pip = 100*Point;
    
-   if(objDict == NULL){
-      objDict = new CDictionary();
-      objCTradeMgr = new CTradeMgr(MagicNumber, Pip, NumberOfTries, Slippage);
+   if(oSignal == NULL){
+      oSignal = new CSignal();
    }
 //---
    return(INIT_SUCCEEDED);
@@ -80,13 +73,7 @@ void OnDeinit(const int reason)
 void OnTick()
 {
      subPrintDetails();
-     //M5产生信号
-     if(CheckTimeM5==iTime(NULL,PERIOD_M5,0)){
-         
-     } else {
-         CheckTimeM5 = iTime(NULL,PERIOD_M5,0);
-        
-     }
+     Signal sr = oSignal.GetSignal();
 }
 
 
