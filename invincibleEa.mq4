@@ -17,32 +17,28 @@
 #include <Arrays\ArrayInt.mqh>
 #include "inc\structs.mqh";
 #include "inc\CSignal.mqh";
-
-
-
-#include "inc\dictionary.mqh" 
-#include "inc\trademgr.mqh"   
-#include "inc\citems.mqh"     
-
+#include "inc\COrder.mqh";
 
 extern int       MagicNumber          = 20180808;
 extern double    Lots                 = 0.1;
 extern int       intTP                = 100;
 extern int       intSL                = 0;
+extern int       intMaxItems          = 6;
+extern int       intMaxActiveItems    = 3;  //no hedg
 extern double    distance             = 5;      
 
 extern string    strUseTdiStochEntryM5  = "TDI + stoch entry m5";
-extern bool      isUseTdiStochEntryM5   = true;
+extern bool      isUse_TdiStochEntryM5   = true;
 
 extern string    strUseTdiStochEntryH1  = "TDI + stoch entry H1";
-extern bool      isUseTdiStochEntryH1   = false;
+extern bool      isUse_TdiStochEntryH1   = true;
 
 extern string    strUseOsMaDivStochEntryH1  = "osMa Divergence + stoch entry H1";
-extern bool      isUseOsMaDivStochEntryH1   = true;
+extern bool      isUse_OsMaDivStochEntryH1   = true;
 
 
 CSignal* oSignal = NULL;
-
+COrder*  oCOrder = NULL;
 
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
@@ -51,10 +47,24 @@ int OnInit()
 {
 //---
    Print("begin");
+   Setting st;
+   st.MagicNumber = MagicNumber;
+   st.Lots = Lots;
+   st.intTP = intTP;
+   st.intSL = intSL;
+   st.distance = distance;
+   st.isUse_TdiStochEntryM5 = isUse_TdiStochEntryM5;
+   st.isUse_TdiStochEntryH1 = isUse_TdiStochEntryH1;
+   st.isUse_OsMaDivStochEntryH1 = isUse_OsMaDivStochEntryH1;
+   st.intMaxItems = intMaxItems;
+   st.intMaxActiveItems = intMaxActiveItems;
    
    if(oSignal == NULL){
       oSignal = new CSignal();
+      oCOrder = new COrder(oSignal);
    }
+   oSignal.init(st);
+   oCOrder.init(st);
 //---
    return(INIT_SUCCEEDED);
 }
@@ -73,7 +83,9 @@ void OnDeinit(const int reason)
 void OnTick()
 {
      subPrintDetails();
-     Signal sr = oSignal.GetSignal();
+     oCOrder.AccountPortect();
+     oCOrder.Entry();
+     
 }
 
 

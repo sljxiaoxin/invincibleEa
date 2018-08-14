@@ -9,7 +9,18 @@
 struct Signal {
     int sign;  //-1:none ,0:buy ,1:sell
     int Level; //-1:none, 0:low, 1:mid , 2:high ,3:strong high
-    bool isReleaseHedg;
+    bool unHedg; //auto close hedg
     string strategy;
     string comment;
+};
+
+struct Setting {
+   int       MagicNumber;
+   double    Lots;
+   int       intTP;
+   int       intSL;
+   double    distance;
+   bool      isUseTdiStochEntryM5;
+   bool      isUseTdiStochEntryH1;
+   bool      isUseOsMaDivStochEntryH1;
 };
