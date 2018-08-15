@@ -36,6 +36,8 @@ extern bool      isUse_TdiStochEntryH1   = true;
 extern string    strUseOsMaDivStochEntryH1  = "osMa Divergence + stoch entry H1";
 extern bool      isUse_OsMaDivStochEntryH1   = true;
 
+datetime CheckTimeM1;
+
 
 CSignal* oSignal = NULL;
 COrder*  oCOrder = NULL;
@@ -83,8 +85,13 @@ void OnDeinit(const int reason)
 void OnTick()
 {
      subPrintDetails();
-     oCOrder.AccountPortect();
-     oCOrder.Entry();
+     if(CheckTimeM1 == iTime(NULL,PERIOD_M1,0)){
+      
+     }else{
+         CheckTimeM1 = iTime(NULL,PERIOD_M1,0);
+         oCOrder.AccountPortect();
+         oCOrder.Entry();
+     }
      
 }
 
