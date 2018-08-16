@@ -20,7 +20,9 @@ struct Setting {
    int       intTP;
    int       intSL;
    double    distance;
-   bool      isUseTdiStochEntryM5;
-   bool      isUseTdiStochEntryH1;
-   bool      isUseOsMaDivStochEntryH1;
+   bool      isUse_TdiStochEntryM5;
+   bool      isUse_TdiStochEntryH1;
+   bool      isUse_OsMaDivStochEntryH1;
+   int       intMaxItems;
+   int       intMaxActiveItems;
 };

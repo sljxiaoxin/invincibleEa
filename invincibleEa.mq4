@@ -65,8 +65,8 @@ int OnInit()
       oSignal = new CSignal();
       oCOrder = new COrder(oSignal);
    }
-   oSignal.init(st);
-   oCOrder.init(st);
+   oSignal.Init(st);
+   oCOrder.Init(st);
 //---
    return(INIT_SUCCEEDED);
 }

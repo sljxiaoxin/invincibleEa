@@ -6,6 +6,7 @@
 #property copyright "Copyright 2015."
 #property link      "http://www.mql5.com"
 
+#include <Arrays\ArrayInt.mqh>
 class CItems : public CObject
 {
    private:

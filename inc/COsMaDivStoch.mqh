@@ -6,7 +6,7 @@
 #property copyright "Copyright 2018."
 #property link      "http://www.yjx.com"
 
-#include "inc\structs.mqh";
+#include "structs.mqh";
 
 class COsMaDivStoch
 {  
