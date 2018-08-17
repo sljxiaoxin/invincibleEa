@@ -23,7 +23,7 @@ extern double    Lots                 = 0.1;
 extern int       intTP                = 100;
 extern int       intSL                = 0;
 extern int       intMaxItems          = 6;
-extern int       intMaxActiveItems    = 3;  //no hedg
+extern int       intMaxActiveItems    = 3;
 extern double    distance             = 5;      
 
 extern string    strUseTdiStochEntryM5  = "TDI + stoch entry m5";
@@ -51,7 +51,7 @@ int OnInit()
 {
 //---
    Print("begin");
-   Setting st;
+   Setting* st = new Setting();
    st.MagicNumber = MagicNumber;
    st.Lots = Lots;
    st.intTP = intTP;
@@ -67,7 +67,7 @@ int OnInit()
    st.mutilplier = mutilplier;
    
    if(oCOrder == NULL){
-      oCOrder = new COrder(oSignal);
+      oCOrder = new COrder();
    }
    oCOrder.Init(st);
 //---
@@ -92,6 +92,7 @@ void OnTick()
       
      }else{
          CheckTimeM1 = iTime(NULL,PERIOD_M1,0);
+         Print("OnTick CheckTimeM1=",CheckTimeM1);
          oCOrder.AccountPortect();
          oCOrder.Entry();
      }
@@ -107,7 +108,9 @@ void subPrintDetails()
    string NL         = "\n";
 
    sComment = sp;
-   sComment = sComment + "Net = " + TotalNetProfit() + NL; 
+   sComment = sComment + "TotalItems = " + oCOrder.TotalItems() + NL; 
+   sComment = sComment + sp;
+   sComment = sComment + "TotalItemsActive = " + oCOrder.TotalItemsActive() + NL; 
    sComment = sComment + sp;
    sComment = sComment + "Lots=" + DoubleToStr(Lots,2) + NL;
    Comment(sComment);

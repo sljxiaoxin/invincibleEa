@@ -6,15 +6,20 @@
 #property copyright "Copyright 2015."
 #property link      "http://www.mql5.com"
 
-struct Signal {
+class Signal {
+    public:
+    
     int sign;  //-1:none ,0:buy ,1:sell
     int Level; //-1:none, 0:low, 1:mid , 2:high ,3:strong high
     bool unHedg; //auto close hedg
     string strategy;
     string comment;
+    
+    Signal(){};
 };
 
-struct Setting {
+class Setting {
+   public:
    int       MagicNumber;
    double    Lots;
    int       intTP;
@@ -28,4 +33,5 @@ struct Setting {
    int       gridSize;
    int       maxMarti;
    double    mutilplier;
+   Setting(){};
 };

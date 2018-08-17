@@ -32,11 +32,11 @@ class CTdiStoch
    public:
    
       CTdiStoch(){};
-      Signal EntrySignalM5(void);
-      Signal EntrySignalH1(void);
+      Signal* EntrySignalM5(void);
+      Signal* EntrySignalH1(void);
       
-      Signal ExitSignalM5(void);
-      Signal ExitSignalH1(void);
+      Signal* ExitSignalM5(void);
+      Signal* ExitSignalH1(void);
       
       int   EntrySignalM5_Buy(void);
       int   EntrySignalM5_Sell(void);
@@ -46,33 +46,39 @@ class CTdiStoch
 
 void CTdiStoch::FillData(int tf, datetime currDt)
 {
-   for(int i=0;i<20;i++){
-      if(tf == PERIOD_M5){
-         if(m_FillDataM5Time == currDt){
-         
-         }else{
-            m_FillDataM5Time = currDt;
-            m_TslM5[i]      = iCustom(NULL,PERIOD_M5,"TDI Red Green",5,i);   
+   int i;
+   
+   if(tf == PERIOD_M5){
+      if(m_FillDataM5Time == currDt){
+      
+      }else{
+         m_FillDataM5Time = currDt;
+         for(i=0;i<20;i++){
+            m_TslM5[i]      = iCustom(NULL,PERIOD_M5,"TDI Red Green",5,i);  
+            //Print("TDI M5 = ",m_TslM5[i]); 
             m_Stoch14M5[i]  = iStochastic(NULL, PERIOD_M5, 14, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
             m_Stoch100M5[i] = iStochastic(NULL, PERIOD_M5, 100, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
          }
       }
-      if(tf == PERIOD_H1){
-         if(m_FillDataH1Time == currDt){
-         
-         }else{
-            m_FillDataH1Time = currDt;
+   }
+   if(tf == PERIOD_H1){
+      if(m_FillDataH1Time == currDt){
+      
+      }else{
+         m_FillDataH1Time = currDt;
+         for(i=0;i<20;i++){
             m_TslH1[i] = iCustom(NULL,PERIOD_H1,"TDI Red Green",5,i);
             m_Stoch14H1[i]  = iStochastic(NULL, PERIOD_H1, 14, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
             m_Stoch100H1[i] = iStochastic(NULL, PERIOD_H1, 100, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
          }
       }
    }
+   
 }
 
-Signal CTdiStoch::EntrySignalM5(void)
+Signal* CTdiStoch::EntrySignalM5(void)
 {
-   Signal sr;
+   Signal* sr = new Signal();
    sr.sign = -1;
    sr.Level = -1;
    sr.unHedg = false;
@@ -107,9 +113,9 @@ Signal CTdiStoch::EntrySignalM5(void)
    return sr;
 }
 
-Signal CTdiStoch::EntrySignalH1(void)
+Signal* CTdiStoch::EntrySignalH1(void)
 {  
-   Signal sr;
+   Signal* sr = new Signal();
    //sr = {-1,-1,false,"",""};
    sr.sign = -1;
    sr.Level = -1;
@@ -145,8 +151,8 @@ Signal CTdiStoch::EntrySignalH1(void)
    return sr;
 }
 
-Signal CTdiStoch::ExitSignalM5(void){
-   Signal sr;
+Signal* CTdiStoch::ExitSignalM5(void){
+   Signal* sr = new Signal();
    //sr = {-1,-1,false,"",""};
    sr.sign = -1;
    sr.Level = -1;
@@ -180,9 +186,9 @@ Signal CTdiStoch::ExitSignalM5(void){
    return sr;
 }
 
-Signal CTdiStoch::ExitSignalH1(void){
+Signal* CTdiStoch::ExitSignalH1(void){
    
-   Signal sr;
+   Signal* sr = new Signal();
    //sr = {-1,-1,false,"",""};
    sr.sign = -1;
    sr.Level = -1;
@@ -219,6 +225,7 @@ Signal CTdiStoch::ExitSignalH1(void){
 ////////////////////////////////////////////////////////////////
 int CTdiStoch::EntrySignalM5_Buy(void){
    int level = -1;
+   Print("CTdiStoch::EntrySignalM5_Buy 1,2,3=",m_TslM5[1],m_TslM5[2],m_TslM5[3]);
    if(m_TslM5[1] > 50 && m_TslM5[2] < 50 && m_TslM5[3] < 50){
       level = 0;
       bool isTdiOver = false,
@@ -250,6 +257,7 @@ int CTdiStoch::EntrySignalM5_Buy(void){
 
 int CTdiStoch::EntrySignalM5_Sell(void){
    int level = -1;
+   Print("CTdiStoch::EntrySignalM5_Sell 1,2,3=",m_TslM5[1],m_TslM5[2],m_TslM5[3]);
    if(m_TslM5[1] < 50 && m_TslM5[2] > 50 && m_TslM5[3] > 50){
       level = 0;
       bool isTdiOver = false,

@@ -24,7 +24,7 @@ class COsMaDivStoch
       double m_Stoch14H1[20];
       double m_Stoch100H1[20];
       
-      Signal m_CurrentH1Sr;
+      Signal* m_CurrentH1Sr;
       
      
       void FillData(int tf, datetime currDt);
@@ -34,14 +34,15 @@ class COsMaDivStoch
    
       COsMaDivStoch(){
          //m_CurrentH1Sr = {-1,-1,false,"",""};
+         m_CurrentH1Sr = new Signal();
          m_CurrentH1Sr.sign = -1;
          m_CurrentH1Sr.Level = -1;
          m_CurrentH1Sr.unHedg = false;
          m_CurrentH1Sr.strategy = "";
          m_CurrentH1Sr.comment = "";
       };
-      Signal EntrySignalH1(void);
-      Signal ExitSignalH1(void);
+      Signal* EntrySignalH1(void);
+      Signal* ExitSignalH1(void);
       
       int   EntrySignalH1_Buy(void);
       int   EntrySignalH1_Sell(void);
@@ -49,21 +50,25 @@ class COsMaDivStoch
 
 void COsMaDivStoch::FillData(int tf, datetime currDt)
 {
-   for(int i=0;i<20;i++){
-      if(tf == PERIOD_M5){
-         if(m_FillDataM5Time == currDt){
-         
-         }else{
-            m_FillDataM5Time = currDt;
+   int i;
+   
+   if(tf == PERIOD_M5){
+      if(m_FillDataM5Time == currDt){
+      
+      }else{
+         m_FillDataM5Time = currDt;
+         for(i=0;i<20;i++){
             m_Stoch14M5[i]  = iStochastic(NULL, PERIOD_M5, 14, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
             m_Stoch100M5[i] = iStochastic(NULL, PERIOD_M5, 100, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
          }
       }
-      if(tf == PERIOD_H1){
-         if(m_FillDataH1Time == currDt){
-         
-         }else{
-            m_FillDataH1Time = currDt;
+   }
+   if(tf == PERIOD_H1){
+      if(m_FillDataH1Time == currDt){
+      
+      }else{
+         m_FillDataH1Time = currDt;
+         for(i=0;i<20;i++){
             m_Stoch14H1[i]  = iStochastic(NULL, PERIOD_H1, 14, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
             m_Stoch100H1[i] = iStochastic(NULL, PERIOD_H1, 100, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
          }
@@ -73,7 +78,7 @@ void COsMaDivStoch::FillData(int tf, datetime currDt)
 
 
 //signal by H1 but M5 for entry
-Signal COsMaDivStoch::EntrySignalH1(void)
+Signal* COsMaDivStoch::EntrySignalH1(void)
 { 
    if(m_EntrySignalH1Time == iTime(NULL,PERIOD_H1,0)){
       
@@ -108,7 +113,7 @@ Signal COsMaDivStoch::EntrySignalH1(void)
       }
    }
    
-   Signal sr; //= {-1,-1,"",""};
+   Signal* sr = new Signal(); //= {-1,-1,"",""};
    sr.sign = -1;
    sr.Level = -1;
    sr.unHedg = false;
@@ -181,7 +186,7 @@ Signal COsMaDivStoch::EntrySignalH1(void)
    return sr;
 }
 
-Signal COsMaDivStoch::ExitSignalH1(void){
+Signal* COsMaDivStoch::ExitSignalH1(void){
 
    FillData(PERIOD_H1, iTime(NULL,PERIOD_H1,0));
    string type = "none";
@@ -194,7 +199,7 @@ Signal COsMaDivStoch::ExitSignalH1(void){
          type = "sell";
       }
    }
-   Signal sr;// = {-1,-1,false,"",""};
+   Signal* sr = new Signal();// = {-1,-1,false,"",""};
    sr.sign = -1;
    sr.Level = -1;
    sr.unHedg = false;
