@@ -16,7 +16,6 @@
 
 #include <Arrays\ArrayInt.mqh>
 #include "inc\structs.mqh";
-#include "inc\CSignal.mqh";
 #include "inc\COrder.mqh";
 
 extern int       MagicNumber          = 20180808;
@@ -36,10 +35,13 @@ extern bool      isUse_TdiStochEntryH1   = true;
 extern string    strUseOsMaDivStochEntryH1  = "osMa Divergence + stoch entry H1";
 extern bool      isUse_OsMaDivStochEntryH1   = true;
 
+extern string    strMarti  = "marti relation setting";
+extern int       gridSize  = 50;
+extern int       maxMarti  = 2;
+extern double    mutilplier = 1;
+
 datetime CheckTimeM1;
 
-
-CSignal* oSignal = NULL;
 COrder*  oCOrder = NULL;
 
 //+------------------------------------------------------------------+
@@ -60,12 +62,13 @@ int OnInit()
    st.isUse_OsMaDivStochEntryH1 = isUse_OsMaDivStochEntryH1;
    st.intMaxItems = intMaxItems;
    st.intMaxActiveItems = intMaxActiveItems;
+   st.gridSize = gridSize;
+   st.maxMarti = maxMarti;
+   st.mutilplier = mutilplier;
    
-   if(oSignal == NULL){
-      oSignal = new CSignal();
+   if(oCOrder == NULL){
       oCOrder = new COrder(oSignal);
    }
-   oSignal.Init(st);
    oCOrder.Init(st);
 //---
    return(INIT_SUCCEEDED);

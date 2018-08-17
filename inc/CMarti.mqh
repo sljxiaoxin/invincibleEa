@@ -1,24 +1,29 @@
 //+------------------------------------------------------------------+
-//|                                                  CTradeMgr.mqh |
+//|                                                  CMarti.mqh |
 //|                                 Copyright 2015, Vasiliy Sokolov. |
 //|                                              http://www.mql5.com |
 //+------------------------------------------------------------------+
 #property copyright "Copyright 2015."
 #property link      "http://www.mql5.com"
+#include "CItems.mqh";
+#include "dictionary.mqh";
+#include "CTrade.mqh";
 
 //马丁类
- class CMartiMgr
+ class CMarti
  {
       private:
-         CDictionary *m_dict;
+         CDictionary *oDictionary;
+         CTrade *oTrade;
+         
          int m_maxMarti;   //每个item最多多少marti
          int m_gridSize;   //加仓size
          double m_mutilplier;  //加仓倍数
-         CTradeMgr *m_TradeMgr;
+         
       public:
-         CMartiMgr(CTradeMgr *TradeMgr, CDictionary *_dict){
-            m_TradeMgr = TradeMgr;
-            m_dict = _dict;
+         CMarti(CTrade *_oTrade, CDictionary *_oDictionary){
+            oTrade = _oTrade;
+            oDictionary = _oDictionary;
          };
          void Init(int gridSize, int maxMarti, double mutilplier);
          void CheckAllMarti(void);
@@ -27,7 +32,7 @@
          bool isNeedMarti(int ticket);
          double GetNewOrderLot(CItems* item);    //获取本次马丁应开手数
  };
- void CMartiMgr::Init(int gridSize, int maxMarti, double mutilplier)
+ void CMarti::Init(int gridSize, int maxMarti, double mutilplier)
  {
  
       m_maxMarti = maxMarti;
@@ -35,22 +40,20 @@
       m_gridSize = gridSize;
       m_mutilplier = mutilplier;
  }
- void CMartiMgr::CheckAllMarti(void)
+ /*
+ void CMarti::CheckAllMarti(void)
  {
-      if(m_dict.Total()<=0)return;
-      CItems* currItem = m_dict.GetFirstNode();
-      for(int i = 1; currItem != NULL; i++)
+      if(oDictionary.Total()<=0)return;
+      CItems* currItem = oDictionary.GetFirstNode();
+      for(int i = 1; (currItem != NULL && CheckPointer(currItem)!=POINTER_INVALID); i++)
       {
          //printf((string)i + " ticket is :\t" + currItem.GetTicket());
          CheckMarti(currItem);
-         if(m_dict.Total() >0){
-            currItem = m_dict.GetNextNode();
-         }else{
-            currItem = NULL;
-         } 
+         currItem = oDictionary.GetNextNode();
       }
  }
- void CMartiMgr::CheckMarti(CItems* item)
+ */
+ void CMarti::CheckMarti(CItems* item)
  {
       if(item.Hedg == 0){
          //当前组内无对冲单则返回
@@ -70,14 +73,14 @@
             int TradeType = OrderType();
             //string memo = item.GetTicket();
             if(TradeType == OP_BUY){
-                  int bTicket = m_TradeMgr.Buy(GetNewOrderLot(item),0,0,"Marti "+item.GetTicket());
+                  int bTicket = oTrade.Buy(GetNewOrderLot(item),0,0,"Marti "+item.GetTicket());
                   Print("open new buy marti ticket is:",bTicket);
                   if(bTicket >0){
                      item.Marti.Add(bTicket);
                   }
             }
             if(TradeType == OP_SELL ){
-                  int sTicket = m_TradeMgr.Sell(GetNewOrderLot(item),0,0,"Marti "+item.GetTicket());
+                  int sTicket = oTrade.Sell(GetNewOrderLot(item),0,0,"Marti "+item.GetTicket());
                   Print("open new sell marti ticket is:",sTicket);
                   if(sTicket >0){
                      item.Marti.Add(sTicket);
@@ -88,7 +91,7 @@
       }
       
  }
- int CMartiMgr::GetBaseMartiTicket(CItems* item)
+ int CMarti::GetBaseMartiTicket(CItems* item)
  {
       if(item.Hedg == 0){
          //如果还没开对冲单
@@ -119,7 +122,7 @@
       }
       return 0;
  }
-bool CMartiMgr::isNeedMarti(int ticket){
+bool CMarti::isNeedMarti(int ticket){
    //TODO
    //是否需要开马丁单check
    if(OrderSelect(ticket, SELECT_BY_TICKET)==true){
@@ -136,14 +139,14 @@ bool CMartiMgr::isNeedMarti(int ticket){
              DistancePoint = NormalizeDouble(TradePrice,Digits) - NormalizeDouble(Open[0],Digits);
         }  
         if(DistancePoint > 0)return false;
-        if(DistancePoint < 0 && MathAbs(DistancePoint/m_TradeMgr.GetPip()) > m_gridSize){
+        if(DistancePoint < 0 && MathAbs(DistancePoint/oTrade.GetPip()) > m_gridSize){
             //满足加仓marti条件
             return true;
         }
    }
    return false;
 }
-double CMartiMgr::GetNewOrderLot(CItems* item)
+double CMarti::GetNewOrderLot(CItems* item)
 {
      double _lot = 0;
      if(OrderSelect(item.GetTicket(), SELECT_BY_TICKET)==true){

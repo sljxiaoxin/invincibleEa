@@ -73,7 +73,12 @@ void CTdiStoch::FillData(int tf, datetime currDt)
 Signal CTdiStoch::EntrySignalM5(void)
 {
    Signal sr;
-   sr = {-1,-1,false,"",""};
+   sr.sign = -1;
+   sr.Level = -1;
+   sr.unHedg = false;
+   sr.strategy = "";
+   sr.comment = "";
+   
    if(m_EntrySignalM5Time == iTime(NULL,PERIOD_M5,0)){
       
    }else{
@@ -81,11 +86,21 @@ Signal CTdiStoch::EntrySignalM5(void)
       FillData(PERIOD_M5, m_EntrySignalM5Time);
       int level = EntrySignalM5_Buy();
       if(level >-1){
-         sr = {OP_BUY,level,false,"CTdiStoch","CTdiStochM5"};
+         //sr = {OP_BUY,level,false,"CTdiStoch","CTdiStochM5"};
+         sr.sign     = OP_BUY;
+         sr.Level    = level;
+         sr.unHedg   = false;
+         sr.strategy = "CTdiStoch";
+         sr.comment  = "CTdiStochM5";
       }else{
          level = EntrySignalM5_Sell();
          if(level > -1){
-            sr = {OP_SELL,level,false,"CTdiStoch","CTdiStochM5"};
+            //sr = {OP_SELL,level,false,"CTdiStoch","CTdiStochM5"};
+            sr.sign     = OP_SELL;
+            sr.Level    = level;
+            sr.unHedg   = false;
+            sr.strategy = "CTdiStoch";
+            sr.comment  = "CTdiStochM5";
          }
       }
    }
@@ -95,7 +110,13 @@ Signal CTdiStoch::EntrySignalM5(void)
 Signal CTdiStoch::EntrySignalH1(void)
 {  
    Signal sr;
-   sr = {-1,-1,false,"",""};
+   //sr = {-1,-1,false,"",""};
+   sr.sign = -1;
+   sr.Level = -1;
+   sr.unHedg = false;
+   sr.strategy = "";
+   sr.comment = "";
+   
    if(m_EntrySignalH1Time == iTime(NULL,PERIOD_H1,0)){
       
    }else{
@@ -103,11 +124,21 @@ Signal CTdiStoch::EntrySignalH1(void)
       FillData(PERIOD_H1, m_EntrySignalH1Time);
       int level = EntrySignalH1_Buy();
       if(level >-1){
-         sr = {OP_BUY,level,true,"CTdiStoch","CTdiStochH1"};
+         //sr = {OP_BUY,level,true,"CTdiStoch","CTdiStochH1"};
+         sr.sign     = OP_BUY;
+         sr.Level    = level;
+         sr.unHedg   = true;
+         sr.strategy = "CTdiStoch";
+         sr.comment  = "CTdiStochH1";
       }else{
          level = EntrySignalH1_Sell();
          if(level > -1){
-            sr = {OP_SELL,level,true,"CTdiStoch","CTdiStochH1"};
+            //sr = {OP_SELL,level,true,"CTdiStoch","CTdiStochH1"};
+            sr.sign     = OP_SELL;
+            sr.Level    = level;
+            sr.unHedg   = true;
+            sr.strategy = "CTdiStoch";
+            sr.comment  = "CTdiStochH1";
          }
       }
    }
@@ -116,18 +147,34 @@ Signal CTdiStoch::EntrySignalH1(void)
 
 Signal CTdiStoch::ExitSignalM5(void){
    Signal sr;
-   sr = {-1,-1,false,"",""};
+   //sr = {-1,-1,false,"",""};
+   sr.sign = -1;
+   sr.Level = -1;
+   sr.unHedg = false;
+   sr.strategy = "";
+   sr.comment = "";
+   
    if(m_ExitSignalM5Time == iTime(NULL,PERIOD_M5,0)){
       
    }else{
       m_ExitSignalM5Time = iTime(NULL,PERIOD_M5,0);
       FillData(PERIOD_M5, m_ExitSignalM5Time);
       if(m_TslM5[1] > 55 && m_TslM5[2] < 55 && m_TslM5[3] < 55){
-         sr = {OP_SELL,1,false,"CTdiStoch","ExitSignalM5"}; 
+         //sr = {OP_SELL,1,false,"CTdiStoch","ExitSignalM5"}; 
+         sr.sign     = OP_SELL;
+         sr.Level    = 1;
+         sr.unHedg   = false;
+         sr.strategy = "CTdiStoch";
+         sr.comment  = "ExitSignalM5";
       }
       
       if(m_TslM5[1] < 55 && m_TslM5[2] > 55 && m_TslM5[3] > 55){
-         sr = {OP_BUY,1,false,"CTdiStoch","ExitSignalM5"}; 
+         //sr = {OP_BUY,1,false,"CTdiStoch","ExitSignalM5"}; 
+         sr.sign     = OP_BUY;
+         sr.Level    = 1;
+         sr.unHedg   = false;
+         sr.strategy = "CTdiStoch";
+         sr.comment  = "ExitSignalM5";
       }
    }
    return sr;
@@ -136,18 +183,34 @@ Signal CTdiStoch::ExitSignalM5(void){
 Signal CTdiStoch::ExitSignalH1(void){
    
    Signal sr;
-   sr = {-1,-1,false,"",""};
+   //sr = {-1,-1,false,"",""};
+   sr.sign = -1;
+   sr.Level = -1;
+   sr.unHedg = false;
+   sr.strategy = "";
+   sr.comment = "";
+   
    if(m_ExitSignalH1Time == iTime(NULL,PERIOD_H1,0)){
       
    }else{
       m_ExitSignalH1Time = iTime(NULL,PERIOD_H1,0);
       FillData(PERIOD_H1, m_ExitSignalH1Time);
       if(m_TslH1[1] > 55 && m_TslH1[2] < 55 && m_TslH1[3] < 55){
-         sr = {OP_SELL,1,false,"CTdiStoch","ExitSignalH1"}; 
+         //sr = {OP_SELL,1,false,"CTdiStoch","ExitSignalH1"}; 
+         sr.sign     = OP_SELL;
+         sr.Level    = 1;
+         sr.unHedg   = false;
+         sr.strategy = "CTdiStoch";
+         sr.comment  = "ExitSignalH1";
       }
       
       if(m_TslH1[1] < 55 && m_TslH1[2] > 55 && m_TslH1[3] > 55){
-         sr = {OP_BUY,1,false,"CTdiStoch","ExitSignalH1"}; 
+         //sr = {OP_BUY,1,false,"CTdiStoch","ExitSignalH1"}; 
+         sr.sign     = OP_BUY;
+         sr.Level    = 1;
+         sr.unHedg   = false;
+         sr.strategy = "CTdiStoch";
+         sr.comment  = "ExitSignalH1";
       }
    }
    return sr;

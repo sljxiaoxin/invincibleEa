@@ -25,4 +25,7 @@ struct Setting {
    bool      isUse_OsMaDivStochEntryH1;
    int       intMaxItems;
    int       intMaxActiveItems;
+   int       gridSize;
+   int       maxMarti;
+   double    mutilplier;
 };
