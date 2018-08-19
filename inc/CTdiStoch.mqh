@@ -225,7 +225,7 @@ Signal* CTdiStoch::ExitSignalH1(void){
 ////////////////////////////////////////////////////////////////
 int CTdiStoch::EntrySignalM5_Buy(void){
    int level = -1;
-   Print("CTdiStoch::EntrySignalM5_Buy 1,2,3=",m_TslM5[1],m_TslM5[2],m_TslM5[3]);
+  // Print("CTdiStoch::EntrySignalM5_Buy 1,2,3=",m_TslM5[1],m_TslM5[2],m_TslM5[3]);
    if(m_TslM5[1] > 50 && m_TslM5[2] < 50 && m_TslM5[3] < 50){
       level = 0;
       bool isTdiOver = false,
@@ -257,7 +257,7 @@ int CTdiStoch::EntrySignalM5_Buy(void){
 
 int CTdiStoch::EntrySignalM5_Sell(void){
    int level = -1;
-   Print("CTdiStoch::EntrySignalM5_Sell 1,2,3=",m_TslM5[1],m_TslM5[2],m_TslM5[3]);
+   //Print("CTdiStoch::EntrySignalM5_Sell 1,2,3=",m_TslM5[1],m_TslM5[2],m_TslM5[3]);
    if(m_TslM5[1] < 50 && m_TslM5[2] > 50 && m_TslM5[3] > 50){
       level = 0;
       bool isTdiOver = false,
@@ -289,6 +289,7 @@ int CTdiStoch::EntrySignalM5_Sell(void){
 
 int CTdiStoch::EntrySignalH1_Buy(void){
    int level = -1;
+   Print("CTdiStoch::EntrySignalH1_Buy ->",m_TslH1[1],", ",m_TslH1[2],", ",m_TslH1[3]);
    if(m_TslH1[1] > 50 && m_TslH1[2] < 50 && m_TslH1[3] < 50){
       level = 0;
       bool isTdiOver = false,
@@ -320,6 +321,7 @@ int CTdiStoch::EntrySignalH1_Buy(void){
 
 int CTdiStoch::EntrySignalH1_Sell(void){
    int level = -1;
+   Print("CTdiStoch::EntrySignalH1_Sell ->",m_TslH1[1],", ",m_TslH1[2],", ",m_TslH1[3]);
    if(m_TslH1[1] < 50 && m_TslH1[2] > 50 && m_TslH1[3] > 50){
       level = 0;
       bool isTdiOver = false,

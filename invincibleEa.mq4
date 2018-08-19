@@ -21,7 +21,7 @@
 extern int       MagicNumber          = 20180808;
 extern double    Lots                 = 0.1;
 extern int       intTP                = 100;
-extern int       intSL                = 0;
+extern int       intSL                = 15;
 extern int       intMaxItems          = 6;
 extern int       intMaxActiveItems    = 3;
 extern double    distance             = 5;      
@@ -92,7 +92,7 @@ void OnTick()
       
      }else{
          CheckTimeM1 = iTime(NULL,PERIOD_M1,0);
-         Print("OnTick CheckTimeM1=",CheckTimeM1);
+         //Print("OnTick CheckTimeM1=",CheckTimeM1);
          oCOrder.AccountPortect();
          oCOrder.Entry();
      }
