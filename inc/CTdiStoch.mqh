@@ -96,7 +96,7 @@ Signal* CTdiStoch::EntrySignalM5(void)
          sr.sign     = OP_BUY;
          sr.Level    = level;
          sr.unHedg   = false;
-         sr.strategy = "CTdiStoch";
+         sr.strategy = "CTdiStochM5";
          sr.comment  = "CTdiStochM5";
       }else{
          level = EntrySignalM5_Sell();
@@ -105,7 +105,7 @@ Signal* CTdiStoch::EntrySignalM5(void)
             sr.sign     = OP_SELL;
             sr.Level    = level;
             sr.unHedg   = false;
-            sr.strategy = "CTdiStoch";
+            sr.strategy = "CTdiStochM5";
             sr.comment  = "CTdiStochM5";
          }
       }
@@ -134,7 +134,7 @@ Signal* CTdiStoch::EntrySignalH1(void)
          sr.sign     = OP_BUY;
          sr.Level    = level;
          sr.unHedg   = true;
-         sr.strategy = "CTdiStoch";
+         sr.strategy = "CTdiStochH1";
          sr.comment  = "CTdiStochH1";
       }else{
          level = EntrySignalH1_Sell();
@@ -143,7 +143,7 @@ Signal* CTdiStoch::EntrySignalH1(void)
             sr.sign     = OP_SELL;
             sr.Level    = level;
             sr.unHedg   = true;
-            sr.strategy = "CTdiStoch";
+            sr.strategy = "CTdiStochH1";
             sr.comment  = "CTdiStochH1";
          }
       }
@@ -170,7 +170,7 @@ Signal* CTdiStoch::ExitSignalM5(void){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "CTdiStoch";
+         sr.strategy = "ExitSignalM5";
          sr.comment  = "ExitSignalM5";
       }
       
@@ -179,7 +179,7 @@ Signal* CTdiStoch::ExitSignalM5(void){
          sr.sign     = OP_BUY;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "CTdiStoch";
+         sr.strategy = "ExitSignalM5";
          sr.comment  = "ExitSignalM5";
       }
    }
@@ -206,7 +206,7 @@ Signal* CTdiStoch::ExitSignalH1(void){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "CTdiStoch";
+         sr.strategy = "ExitSignalH1";
          sr.comment  = "ExitSignalH1";
       }
       
@@ -215,7 +215,7 @@ Signal* CTdiStoch::ExitSignalH1(void){
          sr.sign     = OP_BUY;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "CTdiStoch";
+         sr.strategy = "ExitSignalH1";
          sr.comment  = "ExitSignalH1";
       }
    }

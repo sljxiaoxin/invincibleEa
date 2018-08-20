@@ -98,7 +98,7 @@ Signal* COsMaDivStoch::EntrySignalH1(void)
          m_CurrentH1Sr.sign     = OP_BUY;
          m_CurrentH1Sr.Level    = level;
          m_CurrentH1Sr.unHedg   = false;
-         m_CurrentH1Sr.strategy = "COsMaDivStoch";
+         m_CurrentH1Sr.strategy = "COsMaDivStochH1";
          m_CurrentH1Sr.comment  = "COsMaDivStochH1";
       }else{
          level = EntrySignalH1_Sell();
@@ -107,7 +107,7 @@ Signal* COsMaDivStoch::EntrySignalH1(void)
             m_CurrentH1Sr.sign     = OP_SELL;
             m_CurrentH1Sr.Level    = level;
             m_CurrentH1Sr.unHedg   = false;
-            m_CurrentH1Sr.strategy = "COsMaDivStoch";
+            m_CurrentH1Sr.strategy = "COsMaDivStochH1";
             m_CurrentH1Sr.comment  = "COsMaDivStochH1";
          }
       }
@@ -145,7 +145,7 @@ Signal* COsMaDivStoch::EntrySignalH1(void)
                sr.sign = OP_BUY;
                sr.Level = 3;
                sr.unHedg = true;
-               sr.strategy = "COsMaDivStoch";
+               sr.strategy = "COsMaDivStochH1";
                sr.comment = "COsMaDivStochH1";
                //m_CurrentH1Sr = {-1,-1,"",""};  //reset for next m5 not in
                m_CurrentH1Sr.sign = -1;
@@ -171,7 +171,7 @@ Signal* COsMaDivStoch::EntrySignalH1(void)
                sr.sign = OP_BUY;
                sr.Level = 3;
                sr.unHedg = true;
-               sr.strategy = "COsMaDivStoch";
+               sr.strategy = "COsMaDivStochH1";
                sr.comment = "COsMaDivStochH1";
               // m_CurrentH1Sr = {-1,-1,"",""};  //reset for next m5 not in
                m_CurrentH1Sr.sign = -1;

@@ -90,7 +90,7 @@ Signal* CStoch::EntrySignalM5(void)
          sr.sign     = OP_BUY;
          sr.Level    = level;
          sr.unHedg   = false;
-         sr.strategy = "CStoch";
+         sr.strategy = "CStochM5";
          sr.comment  = "CStochM5";
       }else{
          level = EntrySignalM5_Sell();
@@ -98,7 +98,7 @@ Signal* CStoch::EntrySignalM5(void)
             sr.sign     = OP_SELL;
             sr.Level    = level;
             sr.unHedg   = false;
-            sr.strategy = "CStoch";
+            sr.strategy = "CStochM5";
             sr.comment  = "CStochM5";
          }
       }
@@ -126,7 +126,7 @@ Signal* CStoch::EntrySignalH1(void)
          sr.sign     = OP_BUY;
          sr.Level    = level;
          sr.unHedg   = true;
-         sr.strategy = "CStoch";
+         sr.strategy = "CStochH1";
          sr.comment  = "CStochH1";
       }else{
          level = EntrySignalH1_Sell();
@@ -134,7 +134,7 @@ Signal* CStoch::EntrySignalH1(void)
             sr.sign     = OP_SELL;
             sr.Level    = level;
             sr.unHedg   = true;
-            sr.strategy = "CStoch";
+            sr.strategy = "CStochH1";
             sr.comment  = "CStochH1";
          }
       }
@@ -160,7 +160,7 @@ Signal* CStoch::ExitSignalM5(void){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "CStoch";
+         sr.strategy = "ExitSignalM5";
          sr.comment  = "ExitSignalM5";
       }else{
          level = EntrySignalM5_Sell();
@@ -168,7 +168,7 @@ Signal* CStoch::ExitSignalM5(void){
             sr.sign     = OP_BUY;
             sr.Level    = 1;
             sr.unHedg   = false;
-            sr.strategy = "CStoch";
+            sr.strategy = "ExitSignalM5";
             sr.comment  = "ExitSignalM5";
          }
       }
@@ -195,7 +195,7 @@ Signal* CStoch::ExitSignalH1(void){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "CStoch";
+         sr.strategy = "ExitSignalH1";
          sr.comment  = "ExitSignalH1";
       }else{
          level = EntrySignalH1_Sell();
@@ -203,7 +203,7 @@ Signal* CStoch::ExitSignalH1(void){
             sr.sign     = OP_BUY;
             sr.Level    = 1;
             sr.unHedg   = false;
-            sr.strategy = "CStoch";
+            sr.strategy = "ExitSignalH1";
             sr.comment  = "ExitSignalH1";
          }
       }
