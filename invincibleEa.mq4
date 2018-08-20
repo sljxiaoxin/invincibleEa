@@ -26,6 +26,12 @@ extern int       intMaxItems          = 6;
 extern int       intMaxActiveItems    = 3;
 extern double    distance             = 5;      
 
+extern string    strUseStochEntryM5  = "Stoch entry m5";
+extern bool      isUse_StochEntryM5   = true;
+
+extern string    strUseStochEntryH1  = "Stoch entry H1";
+extern bool      isUse_StochEntryH1   = true;
+
 extern string    strUseTdiStochEntryM5  = "TDI + stoch entry m5";
 extern bool      isUse_TdiStochEntryM5   = true;
 
@@ -57,6 +63,8 @@ int OnInit()
    st.intTP = intTP;
    st.intSL = intSL;
    st.distance = distance;
+   st.isUse_StochEntryM5 = isUse_StochEntryM5;
+   st.isUse_StochEntryH1 = isUse_StochEntryH1;
    st.isUse_TdiStochEntryM5 = isUse_TdiStochEntryM5;
    st.isUse_TdiStochEntryH1 = isUse_TdiStochEntryH1;
    st.isUse_OsMaDivStochEntryH1 = isUse_OsMaDivStochEntryH1;
