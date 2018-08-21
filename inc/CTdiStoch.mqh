@@ -165,7 +165,7 @@ Signal* CTdiStoch::ExitSignalM5(void){
    }else{
       m_ExitSignalM5Time = iTime(NULL,PERIOD_M5,0);
       FillData(PERIOD_M5, m_ExitSignalM5Time);
-      if(m_TslM5[1] > 55 && m_TslM5[2] < 55 && m_TslM5[3] < 55){
+      if(m_TslM5[1] > 32 && m_TslM5[2] < 32 && m_TslM5[3] < 32){
          //sr = {OP_SELL,1,false,"CTdiStoch","ExitSignalM5"}; 
          sr.sign     = OP_SELL;
          sr.Level    = 1;
@@ -174,7 +174,7 @@ Signal* CTdiStoch::ExitSignalM5(void){
          sr.comment  = "ExitSignalM5";
       }
       
-      if(m_TslM5[1] < 55 && m_TslM5[2] > 55 && m_TslM5[3] > 55){
+      if(m_TslM5[1] < 68 && m_TslM5[2] > 68 && m_TslM5[3] > 68){
          //sr = {OP_BUY,1,false,"CTdiStoch","ExitSignalM5"}; 
          sr.sign     = OP_BUY;
          sr.Level    = 1;
@@ -226,15 +226,13 @@ Signal* CTdiStoch::ExitSignalH1(void){
 int CTdiStoch::EntrySignalM5_Buy(void){
    int level = -1;
   // Print("CTdiStoch::EntrySignalM5_Buy 1,2,3=",m_TslM5[1],m_TslM5[2],m_TslM5[3]);
-   if(m_TslM5[1] > 50 && m_TslM5[2] < 50 && m_TslM5[3] < 50){
+   if(m_TslM5[1] > 32 && m_TslM5[2] < 32 && m_TslM5[3] < 32){
       level = 0;
-      bool isTdiOver = false,
+      bool 
            isStoch14Over = false, 
            isStoch100Over = false;
       for(int i=3;i<20;i++){
-         if(m_TslM5[i]<32){
-            isTdiOver = true;
-         }
+         
          if(m_Stoch14M5[i]<11){
             isStoch14Over = true;
          }
@@ -242,14 +240,12 @@ int CTdiStoch::EntrySignalM5_Buy(void){
             isStoch100Over = true;
          }
       }
-      if(isTdiOver && isStoch14Over && isStoch100Over){
+      if(isStoch14Over && isStoch100Over){
          level = 3;
-      }else if(isTdiOver && isStoch14Over){
+      }else if(isStoch14Over){
          level = 2;
-      }else if(isTdiOver && isStoch100Over){
+      }else if( isStoch100Over){
          level = 2;
-      }else if(isTdiOver){
-         level = 1;
       }
    }
    return level;
@@ -258,15 +254,13 @@ int CTdiStoch::EntrySignalM5_Buy(void){
 int CTdiStoch::EntrySignalM5_Sell(void){
    int level = -1;
    //Print("CTdiStoch::EntrySignalM5_Sell 1,2,3=",m_TslM5[1],m_TslM5[2],m_TslM5[3]);
-   if(m_TslM5[1] < 50 && m_TslM5[2] > 50 && m_TslM5[3] > 50){
+   if(m_TslM5[1] < 68 && m_TslM5[2] > 68 && m_TslM5[3] > 68){
       level = 0;
-      bool isTdiOver = false,
+      bool 
            isStoch14Over = false, 
            isStoch100Over = false;
       for(int i=3;i<20;i++){
-         if(m_TslM5[i]>68){
-            isTdiOver = true;
-         }
+         
          if(m_Stoch14M5[i]>89){
             isStoch14Over = true;
          }
@@ -274,14 +268,12 @@ int CTdiStoch::EntrySignalM5_Sell(void){
             isStoch100Over = true;
          }
       }
-      if(isTdiOver && isStoch14Over && isStoch100Over){
+      if(isStoch14Over && isStoch100Over){
          level = 3;
-      }else if(isTdiOver && isStoch14Over){
+      }else if( isStoch14Over){
          level = 2;
-      }else if(isTdiOver && isStoch100Over){
+      }else if( isStoch100Over){
          level = 2;
-      }else if(isTdiOver){
-         level = 1;
       }
    }
    return level;
@@ -290,15 +282,13 @@ int CTdiStoch::EntrySignalM5_Sell(void){
 int CTdiStoch::EntrySignalH1_Buy(void){
    int level = -1;
    Print("CTdiStoch::EntrySignalH1_Buy ->",m_TslH1[1],", ",m_TslH1[2],", ",m_TslH1[3]);
-   if(m_TslH1[1] > 50 && m_TslH1[2] < 50 && m_TslH1[3] < 50){
+   if(m_TslH1[1] > 32 && m_TslH1[2] < 32 && m_TslH1[3] < 32){
       level = 0;
-      bool isTdiOver = false,
+      bool 
            isStoch14Over = false, 
            isStoch100Over = false;
       for(int i=3;i<20;i++){
-         if(m_TslH1[i]<32){
-            isTdiOver = true;
-         }
+        
          if(m_Stoch14H1[i]<11){
             isStoch14Over = true;
          }
@@ -306,14 +296,12 @@ int CTdiStoch::EntrySignalH1_Buy(void){
             isStoch100Over = true;
          }
       }
-      if(isTdiOver && isStoch14Over && isStoch100Over){
+      if(isStoch14Over && isStoch100Over){
          level = 3;
-      }else if(isTdiOver && isStoch14Over){
+      }else if(isStoch14Over){
          level = 2;
-      }else if(isTdiOver && isStoch100Over){
+      }else if(isStoch100Over){
          level = 2;
-      }else if(isTdiOver){
-         level = 1;
       }
    }
    return level;
@@ -322,15 +310,13 @@ int CTdiStoch::EntrySignalH1_Buy(void){
 int CTdiStoch::EntrySignalH1_Sell(void){
    int level = -1;
    Print("CTdiStoch::EntrySignalH1_Sell ->",m_TslH1[1],", ",m_TslH1[2],", ",m_TslH1[3]);
-   if(m_TslH1[1] < 50 && m_TslH1[2] > 50 && m_TslH1[3] > 50){
+   if(m_TslH1[1] < 68 && m_TslH1[2] > 68 && m_TslH1[3] > 68){
       level = 0;
-      bool isTdiOver = false,
+      bool 
            isStoch14Over = false, 
            isStoch100Over = false;
       for(int i=3;i<20;i++){
-         if(m_TslH1[i]>68){
-            isTdiOver = true;
-         }
+         
          if(m_Stoch14H1[i]>89){
             isStoch14Over = true;
          }
@@ -338,14 +324,12 @@ int CTdiStoch::EntrySignalH1_Sell(void){
             isStoch100Over = true;
          }
       }
-      if(isTdiOver && isStoch14Over && isStoch100Over){
+      if(isStoch14Over && isStoch100Over){
          level = 3;
-      }else if(isTdiOver && isStoch14Over){
+      }else if(isStoch14Over){
          level = 2;
-      }else if(isTdiOver && isStoch100Over){
+      }else if(isStoch100Over){
          level = 2;
-      }else if(isTdiOver){
-         level = 1;
       }
    }
    return level;

@@ -14,8 +14,13 @@ class Signal {
     bool unHedg; //auto close hedg
     string strategy;
     string comment;
+    int intTP;
+    int intSL;
     
-    Signal(){};
+    Signal(){
+      intTP = 0;
+      intSL = 0;
+    };
 };
 
 class Setting {

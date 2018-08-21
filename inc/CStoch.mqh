@@ -230,6 +230,8 @@ int CStoch::EntrySignalM5_Sell(void){
 
 int CStoch::EntrySignalH1_Buy(void){
    int level = -1;
+   //Print("CStoch::EntrySignalH1_Buy m_Stoch14H1 1,2,3=",m_Stoch14H1[1],",",m_Stoch14H1[2],",",m_Stoch14H1[3]);
+   //Print("CStoch::EntrySignalH1_Buy m_Stoch100H1 1,2,3=",m_Stoch100H1[1],",",m_Stoch100H1[2],",",m_Stoch100H1[3]);
    if(m_Stoch14H1[1] > m_Stoch100H1[1] && m_Stoch14H1[2] < m_Stoch100H1[2] && m_Stoch14H1[2]<18){
       level = 2;
    }
@@ -238,7 +240,9 @@ int CStoch::EntrySignalH1_Buy(void){
 
 int CStoch::EntrySignalH1_Sell(void){
    int level = -1;
-   if(m_Stoch14H1[1] < m_Stoch100H1[1] && m_Stoch14H1[2] > m_Stoch100H1[2] && m_Stoch14H1[2]<18){
+   //Print("CStoch::EntrySignalH1_Sell m_Stoch14H1 1,2,3=",m_Stoch14H1[1],",",m_Stoch14H1[2],",",m_Stoch14H1[3]);
+   //Print("CStoch::EntrySignalH1_Sell m_Stoch100H1 1,2,3=",m_Stoch100H1[1],",",m_Stoch100H1[2],",",m_Stoch100H1[3]);
+   if(m_Stoch14H1[1] < m_Stoch100H1[1] && m_Stoch14H1[2] > m_Stoch100H1[2] && m_Stoch14H1[2]>82){
       level = 2;
    }
    return level;

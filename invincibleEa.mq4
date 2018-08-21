@@ -23,7 +23,7 @@ extern double    Lots                 = 0.1;
 extern int       intTP                = 100;
 extern int       intSL                = 15;
 extern int       intMaxItems          = 6;
-extern int       intMaxActiveItems    = 3;
+extern int       intMaxActiveItems    = 1;
 extern double    distance             = 5;      
 
 extern string    strUseStochEntryM5  = "Stoch entry m5";

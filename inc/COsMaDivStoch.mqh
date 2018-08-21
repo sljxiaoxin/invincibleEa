@@ -131,16 +131,16 @@ Signal* COsMaDivStoch::EntrySignalH1(void)
       
       bool isStoch14M5Over = false,isStoch100M5Over = false;
       if(m_CurrentH1Sr.sign == OP_BUY){
-         if(m_Stoch14M5[1] >20 && m_Stoch100M5[1]>20 && m_Stoch14H1[1]>11 && m_Stoch100H1[1]>11){
+         
             for(int i=3;i<10;i++){
-               if(m_Stoch14M5[i]<11){
+               if(m_Stoch14M5[i]<20){
                   isStoch14M5Over = true;
                }
-               if(m_Stoch100M5[i]<11){
+               if(m_Stoch100M5[i]<20){
                   isStoch100M5Over = true;
                }
             }
-            if(isStoch14M5Over && isStoch100M5Over){
+            if(isStoch14M5Over || isStoch100M5Over){
                //sr = {OP_BUY,3,true,"COsMaDivStoch","COsMaDivStochH1"};
                sr.sign = OP_BUY;
                sr.Level = 3;
@@ -154,19 +154,17 @@ Signal* COsMaDivStoch::EntrySignalH1(void)
                m_CurrentH1Sr.strategy = "";
                m_CurrentH1Sr.comment = "";
             }
-         }
       }
       if(m_CurrentH1Sr.sign == OP_SELL){
-         if(m_Stoch14M5[1] <80 && m_Stoch100M5[1]<80 && m_Stoch14H1[1]<89 && m_Stoch100H1[1]<89){
             for(int i=3;i<10;i++){
-               if(m_Stoch14M5[i]>89){
+               if(m_Stoch14M5[i]>80){
                   isStoch14M5Over = true;
                }
-               if(m_Stoch100M5[i]>89){
+               if(m_Stoch100M5[i]>80){
                   isStoch100M5Over = true;
                }
             }
-            if(isStoch14M5Over && isStoch100M5Over){
+            if(isStoch14M5Over || isStoch100M5Over){
                //sr = {OP_SELL,3,true,"COsMaDivStoch","COsMaDivStochH1"};
                sr.sign = OP_BUY;
                sr.Level = 3;
@@ -180,7 +178,6 @@ Signal* COsMaDivStoch::EntrySignalH1(void)
                m_CurrentH1Sr.strategy = "";
                m_CurrentH1Sr.comment = "";
             }
-         }
       }
    }
    return sr;
@@ -213,16 +210,16 @@ Signal* COsMaDivStoch::ExitSignalH1(void){
       
       bool isStoch14M5Over = false,isStoch100M5Over = false;
       if(type == "buy"){
-         if(m_Stoch14M5[1] >20 && m_Stoch100M5[1]>20 && m_Stoch14H1[1]>11 && m_Stoch100H1[1]>11){
+         
             for(int i=3;i<10;i++){
-               if(m_Stoch14M5[i]<11){
+               if(m_Stoch14M5[i]<20){
                   isStoch14M5Over = true;
                }
-               if(m_Stoch100M5[i]<11){
+               if(m_Stoch100M5[i]<20){
                   isStoch100M5Over = true;
                }
             }
-            if(isStoch14M5Over && isStoch100M5Over){
+            if(isStoch14M5Over || isStoch100M5Over){
                //sr = {OP_SELL,3,false,"COsMaDivStoch","ExitSignalH1"};
                sr.sign = OP_SELL;
                sr.Level = 3;
@@ -230,19 +227,19 @@ Signal* COsMaDivStoch::ExitSignalH1(void){
                sr.strategy = "COsMaDivStoch";
                sr.comment = "ExitSignalH1";
             }
-         }
+         
       }
       if(type == "sell"){
-         if(m_Stoch14M5[1] <80 && m_Stoch100M5[1]<80 && m_Stoch14H1[1]<89 && m_Stoch100H1[1]<89){
+         
             for(int i=3;i<10;i++){
-               if(m_Stoch14M5[i]>89){
+               if(m_Stoch14M5[i]>80){
                   isStoch14M5Over = true;
                }
-               if(m_Stoch100M5[i]>89){
+               if(m_Stoch100M5[i]>80){
                   isStoch100M5Over = true;
                }
             }
-            if(isStoch14M5Over && isStoch100M5Over){
+            if(isStoch14M5Over || isStoch100M5Over){
                //sr = {OP_BUY,3,false,"COsMaDivStoch","ExitSignalH1"};
                sr.sign = OP_BUY;
                sr.Level = 3;
@@ -251,7 +248,6 @@ Signal* COsMaDivStoch::ExitSignalH1(void){
                sr.comment = "ExitSignalH1";
             }
          }
-      }
    }
    return sr;
 }
@@ -261,8 +257,8 @@ Signal* COsMaDivStoch::ExitSignalH1(void){
 
 int COsMaDivStoch::EntrySignalH1_Buy(void){
    int level = -1;
-   double bullishDivVal1 = iCustom(NULL,PERIOD_M5,"FX5_Divergence_v2.0_yjx",2,1);  //up
-   double bullishDivVal2 = iCustom(NULL,PERIOD_M5,"FX5_Divergence_v2.0_yjx",2,2);  //up
+   double bullishDivVal1 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_v2.0_yjx",2,1);  //up
+   double bullishDivVal2 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_v2.0_yjx",2,2);  //up
    
    if(bullishDivVal1 != EMPTY_VALUE || bullishDivVal2 != EMPTY_VALUE){
       level = 2;
@@ -272,8 +268,8 @@ int COsMaDivStoch::EntrySignalH1_Buy(void){
 
 int COsMaDivStoch::EntrySignalH1_Sell(void){
    int level = -1;
-   double bearishDivVal1 = iCustom(NULL,PERIOD_M5,"FX5_Divergence_v2.0_yjx",3,1);  //down
-   double bearishDivVal2 = iCustom(NULL,PERIOD_M5,"FX5_Divergence_v2.0_yjx",3,2);  //down
+   double bearishDivVal1 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_v2.0_yjx",3,1);  //down
+   double bearishDivVal2 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_v2.0_yjx",3,2);  //down
    
    if(bearishDivVal1 != EMPTY_VALUE || bearishDivVal2 != EMPTY_VALUE){
       level = 2;
