@@ -22,8 +22,8 @@ extern int       MagicNumber          = 20180808;
 extern double    Lots                 = 0.1;
 extern int       intTP                = 100;
 extern int       intSL                = 15;
-extern int       intMaxItems          = 6;
-extern int       intMaxActiveItems    = 1;
+extern int       intMaxItems          = 5;
+extern int       intMaxActiveItems    = 2;
 extern double    distance             = 5;      
 
 extern string    strUseStochEntryM5  = "Stoch entry m5";
@@ -43,7 +43,7 @@ extern bool      isUse_OsMaDivStochEntryH1   = true;
 
 extern string    strMarti  = "marti relation setting";
 extern int       gridSize  = 50;
-extern int       maxMarti  = 2;
+extern int       maxMarti  = 0;
 extern double    mutilplier = 1;
 
 datetime CheckTimeM1;

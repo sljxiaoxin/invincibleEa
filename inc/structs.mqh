@@ -16,10 +16,12 @@ class Signal {
     string comment;
     int intTP;
     int intSL;
+    int intHD; //hedge
     
     Signal(){
       intTP = 0;
       intSL = 0;
+      intHD = 0;
     };
 };
 
