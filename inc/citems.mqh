@@ -52,8 +52,8 @@ class CItems : public CObject
       int GetOpType(){return m_OpType;};
       void SetSL(int sl){m_IntSL = sl;};
       void SetHD(int hd){m_IntHD = hd;};
-      void SetTpPrice(double tp){m_TpPrice = tp};
-      void SetSlPrice(double sl){m_SlPrice = sl};
+      void SetTpPrice(double tp){m_TpPrice = tp;};
+      void SetSlPrice(double sl){m_SlPrice = sl;};
       double GetTpPrice(){return m_TpPrice;};
       double GetSlPrice(){return m_SlPrice;};
 };
