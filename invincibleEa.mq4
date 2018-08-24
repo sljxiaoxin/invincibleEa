@@ -32,6 +32,12 @@ extern bool      isUse_StochEntryM5   = true;
 extern string    strUseStochEntryH1  = "Stoch entry H1";
 extern bool      isUse_StochEntryH1   = true;
 
+extern string    strUseStochEntryM5  = "MA entry m5";
+extern bool      isUse_MaEntryM5   = true;
+
+extern string    strUseStochEntryH1  = "MA entry H1";
+extern bool      isUse_MaEntryH1   = true;
+
 extern string    strUseTdiStochEntryM5  = "TDI + stoch entry m5";
 extern bool      isUse_TdiStochEntryM5   = true;
 
@@ -63,6 +69,8 @@ int OnInit()
    st.intTP = intTP;
    st.intSL = intSL;
    st.distance = distance;
+   st.isUse_MaEntryM5 = isUse_MaEntryM5;
+   st.isUse_MaEntryH1 = isUse_MaEntryH1;
    st.isUse_StochEntryM5 = isUse_StochEntryM5;
    st.isUse_StochEntryH1 = isUse_StochEntryH1;
    st.isUse_TdiStochEntryM5 = isUse_TdiStochEntryM5;

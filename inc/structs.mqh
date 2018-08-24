@@ -32,6 +32,8 @@ class Setting {
    int       intTP;
    int       intSL;
    double    distance;
+   bool      isUse_MaEntryM5;
+   bool      isUse_MaEntryH1;
    bool      isUse_StochEntryM5;
    bool      isUse_StochEntryH1;
    bool      isUse_TdiStochEntryM5;

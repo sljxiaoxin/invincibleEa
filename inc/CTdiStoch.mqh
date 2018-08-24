@@ -240,12 +240,8 @@ int CTdiStoch::EntrySignalM5_Buy(void){
             isStoch100Over = true;
          }
       }
-      if(isStoch14Over && isStoch100Over){
-         level = 3;
-      }else if(isStoch14Over){
-         level = 2;
-      }else if( isStoch100Over){
-         level = 2;
+      if((isStoch14Over || isStoch100Over) && m_Stoch100M5[1]>20){
+         level = 1;
       }
    }
    return level;
@@ -268,12 +264,8 @@ int CTdiStoch::EntrySignalM5_Sell(void){
             isStoch100Over = true;
          }
       }
-      if(isStoch14Over && isStoch100Over){
-         level = 3;
-      }else if( isStoch14Over){
-         level = 2;
-      }else if( isStoch100Over){
-         level = 2;
+      if((isStoch14Over || isStoch100Over) && m_Stoch100M5[1]<80){
+         level = 1;
       }
    }
    return level;
@@ -296,12 +288,8 @@ int CTdiStoch::EntrySignalH1_Buy(void){
             isStoch100Over = true;
          }
       }
-      if(isStoch14Over && isStoch100Over){
-         level = 3;
-      }else if(isStoch14Over){
-         level = 2;
-      }else if(isStoch100Over){
-         level = 2;
+      if((isStoch14Over || isStoch100Over) && m_Stoch100H1[1]>20){
+         level = 1;
       }
    }
    return level;
@@ -324,12 +312,8 @@ int CTdiStoch::EntrySignalH1_Sell(void){
             isStoch100Over = true;
          }
       }
-      if(isStoch14Over && isStoch100Over){
-         level = 3;
-      }else if(isStoch14Over){
-         level = 2;
-      }else if(isStoch100Over){
-         level = 2;
+      if((isStoch14Over || isStoch100Over) && m_Stoch100H1[1]<80){
+         level = 1;
       }
    }
    return level;

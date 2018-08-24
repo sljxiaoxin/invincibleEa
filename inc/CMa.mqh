@@ -46,10 +46,6 @@ class CMa
       Signal* ExitSignalM5(void);
       Signal* ExitSignalH1(void);
       
-      int   EntrySignalM5_Buy(void);
-      int   EntrySignalM5_Sell(void);
-      int   EntrySignalH1_Buy(void);
-      int   EntrySignalH1_Sell(void);
 };
 
 void CMa::FillData(int tf, datetime currDt)
@@ -108,7 +104,7 @@ Signal* CMa::EntrySignalM5(void)
          crossTypeM5 = "down";
          passM5 = 0;
       }
-      if(crossTypeM5 == "up" && passM5<30 && m_Stoch100M5>50){
+      if(crossTypeM5 == "up" && passM5<20 && m_Stoch100M5[1]>50){
          sr.sign     = OP_BUY;
          sr.Level    = 1;
          sr.unHedg   = false;
@@ -118,7 +114,7 @@ Signal* CMa::EntrySignalM5(void)
          crossTypeM5 = "none";
          passM5  = 0;
       }
-      if(crossTypeM5 == "down" && passM5<30 && m_Stoch100M5<50){
+      if(crossTypeM5 == "down" && passM5<20 && m_Stoch100M5[1]<50){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
@@ -148,22 +144,34 @@ Signal* CMa::EntrySignalH1(void)
    }else{
       m_EntrySignalH1Time = iTime(NULL,PERIOD_H1,0);
       FillData(PERIOD_H1, m_EntrySignalH1Time);
-      int level = EntrySignalH1_Buy();
-      if(level >-1){
+      passH1 += 1;
+      if(m_Ma10H1[1] > m_Ma30H1[1] && m_Ma10H1[2] < m_Ma30H1[2]){
+         crossTypeH1 = "up";
+         passH1 = 0;
+      }
+      if(m_Ma10H1[1] < m_Ma30H1[1] && m_Ma10H1[2] > m_Ma30H1[2]){
+         crossTypeH1 = "down";
+         passH1 = 0;
+      }
+      if(crossTypeH1 == "up" && passH1<12 && m_Stoch100H1[1]>50){
          sr.sign     = OP_BUY;
-         sr.Level    = level;
-         sr.unHedg   = true;
-         sr.strategy = "CStochH1";
-         sr.comment  = "CStochH1";
-      }else{
-         level = EntrySignalH1_Sell();
-         if(level > -1){
-            sr.sign     = OP_SELL;
-            sr.Level    = level;
-            sr.unHedg   = true;
-            sr.strategy = "CStochH1";
-            sr.comment  = "CStochH1";
-         }
+         sr.Level    = 1;
+         sr.unHedg   = false;
+         sr.strategy = "CMaH1";
+         sr.comment  = "CMaH1";
+         
+         crossTypeH1 = "none";
+         passH1  = 0;
+      }
+      if(crossTypeH1 == "down" && passH1<12 && m_Stoch100H1[1]<50){
+         sr.sign     = OP_SELL;
+         sr.Level    = 1;
+         sr.unHedg   = false;
+         sr.strategy = "CMaH1";
+         sr.comment  = "CMaH1";
+         
+         crossTypeH1 = "none";
+         passH1  = 0;
       }
    }
    return sr;
@@ -182,22 +190,20 @@ Signal* CMa::ExitSignalM5(void){
    }else{
       m_ExitSignalM5Time = iTime(NULL,PERIOD_M5,0);
       FillData(PERIOD_M5, m_ExitSignalM5Time);
-      int level = EntrySignalM5_Buy();
-      if(level >-1){
+      
+      if(m_Ma10M5[1] > m_Ma30M5[1] && m_Ma10M5[2] < m_Ma30M5[2]){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
          sr.strategy = "ExitSignalM5";
          sr.comment  = "ExitSignalM5";
-      }else{
-         level = EntrySignalM5_Sell();
-         if(level >-1){
+      }
+      if(m_Ma10M5[1] < m_Ma30M5[1] && m_Ma10M5[2] > m_Ma30M5[2]){
             sr.sign     = OP_BUY;
             sr.Level    = 1;
             sr.unHedg   = false;
             sr.strategy = "ExitSignalM5";
             sr.comment  = "ExitSignalM5";
-         }
       }
    }
    return sr;
@@ -217,60 +223,21 @@ Signal* CMa::ExitSignalH1(void){
    }else{
       m_ExitSignalH1Time = iTime(NULL,PERIOD_H1,0);
       FillData(PERIOD_H1, m_ExitSignalH1Time);
-      int level = EntrySignalH1_Buy();
-      if(level >-1){
+      
+      if(m_Ma10H1[1] > m_Ma30H1[1] && m_Ma10H1[2] < m_Ma30H1[2]){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
          sr.strategy = "ExitSignalH1";
          sr.comment  = "ExitSignalH1";
-      }else{
-         level = EntrySignalH1_Sell();
-         if(level >-1){
+      }
+      if(m_Ma10H1[1] < m_Ma30H1[1] && m_Ma10H1[2] > m_Ma30H1[2]){
             sr.sign     = OP_BUY;
             sr.Level    = 1;
             sr.unHedg   = false;
             sr.strategy = "ExitSignalH1";
             sr.comment  = "ExitSignalH1";
-         }
       }
    }
    return sr;
-}
-
-////////////////////////////////////////////////////////////////
-int CMa::EntrySignalM5_Buy(void){
-   int level = -1;
-   if(m_Stoch14M5[1] > m_Stoch100M5[1] && m_Stoch14M5[2] < m_Stoch100M5[2] && m_Stoch14M5[2]<18){
-      level = 2;
-   }
-   return level;
-}
-
-int CMa::EntrySignalM5_Sell(void){
-   int level = -1;
-   if(m_Stoch14M5[1] < m_Stoch100M5[1] && m_Stoch14M5[2] > m_Stoch100M5[2] && m_Stoch14M5[2]>82){
-      level = 2;
-   }
-   return level;
-}
-
-int CMa::EntrySignalH1_Buy(void){
-   int level = -1;
-   //Print("CStoch::EntrySignalH1_Buy m_Stoch14H1 1,2,3=",m_Stoch14H1[1],",",m_Stoch14H1[2],",",m_Stoch14H1[3]);
-   //Print("CStoch::EntrySignalH1_Buy m_Stoch100H1 1,2,3=",m_Stoch100H1[1],",",m_Stoch100H1[2],",",m_Stoch100H1[3]);
-   if(m_Stoch14H1[1] > m_Stoch100H1[1] && m_Stoch14H1[2] < m_Stoch100H1[2] && m_Stoch14H1[2]<18){
-      level = 2;
-   }
-   return level;
-}
-
-int CMa::EntrySignalH1_Sell(void){
-   int level = -1;
-   //Print("CStoch::EntrySignalH1_Sell m_Stoch14H1 1,2,3=",m_Stoch14H1[1],",",m_Stoch14H1[2],",",m_Stoch14H1[3]);
-   //Print("CStoch::EntrySignalH1_Sell m_Stoch100H1 1,2,3=",m_Stoch100H1[1],",",m_Stoch100H1[2],",",m_Stoch100H1[3]);
-   if(m_Stoch14H1[1] < m_Stoch100H1[1] && m_Stoch14H1[2] > m_Stoch100H1[2] && m_Stoch14H1[2]>82){
-      level = 2;
-   }
-   return level;
 }
