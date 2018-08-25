@@ -257,8 +257,8 @@ Signal* COsMaDivStoch::ExitSignalH1(void){
 
 int COsMaDivStoch::EntrySignalH1_Buy(void){
    int level = -1;
-   double bullishDivVal1 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_v2.0_yjx",2,1);  //up
-   double bullishDivVal2 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_v2.0_yjx",2,2);  //up
+   double bullishDivVal1 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_V2.0_Classical_yjx",2,1);  //up
+   double bullishDivVal2 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_V2.0_Classical_yjx",2,2);  //up
    
    if(bullishDivVal1 != EMPTY_VALUE || bullishDivVal2 != EMPTY_VALUE){
       level = 2;
@@ -268,8 +268,8 @@ int COsMaDivStoch::EntrySignalH1_Buy(void){
 
 int COsMaDivStoch::EntrySignalH1_Sell(void){
    int level = -1;
-   double bearishDivVal1 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_v2.0_yjx",3,1);  //down
-   double bearishDivVal2 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_v2.0_yjx",3,2);  //down
+   double bearishDivVal1 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_V2.0_Classical_yjx",3,1);  //down
+   double bearishDivVal2 = iCustom(NULL,PERIOD_H1,"FX5_Divergence_V2.0_Classical_yjx",3,2);  //down
    
    if(bearishDivVal1 != EMPTY_VALUE || bearishDivVal2 != EMPTY_VALUE){
       level = 2;

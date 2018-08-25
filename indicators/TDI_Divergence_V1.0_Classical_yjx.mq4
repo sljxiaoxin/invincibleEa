@@ -108,21 +108,22 @@ void CalculateOsMA(int i)
   {
    //OsMA[i] = iOsMA(NULL, 0, fastEMA, slowEMA, signal, PRICE_CLOSE, i);
    OsMA[i] = iCustom(NULL, 0, "TDI Red Green", 5, i); 
-   if(OsMA[i] > 50)
+   OsMA[i] = OsMA[i] -50;
+   if(OsMA[i] > 0)
      {
       upOsMA[i] = OsMA[i];
-      downOsMA[i] = 50;
+      downOsMA[i] = 0;
      }
    else 
-       if(OsMA[i] < 50)
+       if(OsMA[i] < 0)
          {
            downOsMA[i] = OsMA[i];
-           upOsMA[i] = 50;   
+           upOsMA[i] = 0;   
          }
    else
      {
-       upOsMA[i] = 50;
-       downOsMA[i] = 50;   
+       upOsMA[i] = 0;
+       downOsMA[i] = 0;   
      }         
   }
 //+------------------------------------------------------------------+

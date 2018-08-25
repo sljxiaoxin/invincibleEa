@@ -12,11 +12,11 @@ class CMa
 {  
    private:
       
-      int passM5 = 0;
-      string crossTypeM5 = "none"; //up down
+      int passM5;
+      string crossTypeM5; //up down
       
-      int passH1 = 0;
-      string crossTypeH1 = "none"; //up down
+      int passH1;
+      string crossTypeH1; //up down
       
       datetime m_EntrySignalM5Time;
       datetime m_EntrySignalH1Time;
@@ -39,7 +39,12 @@ class CMa
       
    public:
    
-      CStoch(){};
+      CMa(){
+         passM5 = 0;
+         crossTypeM5 = "none"; //up down
+         passH1 = 0;
+         crossTypeH1 = "none"; //up down
+      };
       Signal* EntrySignalM5(void);
       Signal* EntrySignalH1(void);
       
@@ -58,8 +63,8 @@ void CMa::FillData(int tf, datetime currDt)
       }else{
          m_FillDataM5Time = currDt;
          for(i=0;i<20;i++){ 
-            m_Ma10M5 = iMA(NULL,PERIOD_M5,10,0,MODE_SMA,PRICE_CLOSE,i);
-            m_Ma30M5 = iMA(NULL,PERIOD_M5,30,0,MODE_SMA,PRICE_CLOSE,i);
+            m_Ma10M5[i] = iMA(NULL,PERIOD_M5,10,0,MODE_SMA,PRICE_CLOSE,i);
+            m_Ma30M5[i] = iMA(NULL,PERIOD_M5,30,0,MODE_SMA,PRICE_CLOSE,i);
             //m_Stoch14M5[i]  = iStochastic(NULL, PERIOD_M5, 14, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
             m_Stoch100M5[i] = iStochastic(NULL, PERIOD_M5, 100, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
          }
@@ -71,8 +76,8 @@ void CMa::FillData(int tf, datetime currDt)
       }else{
          m_FillDataH1Time = currDt;
          for(i=0;i<20;i++){
-            m_Ma10H1 = iMA(NULL,PERIOD_H1,10,0,MODE_SMA,PRICE_CLOSE,i);
-            m_Ma30H1 = iMA(NULL,PERIOD_H1,30,0,MODE_SMA,PRICE_CLOSE,i);
+            m_Ma10H1[i] = iMA(NULL,PERIOD_H1,10,0,MODE_SMA,PRICE_CLOSE,i);
+            m_Ma30H1[i] = iMA(NULL,PERIOD_H1,30,0,MODE_SMA,PRICE_CLOSE,i);
             //m_Stoch14H1[i]  = iStochastic(NULL, PERIOD_H1, 14, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
             m_Stoch100H1[i] = iStochastic(NULL, PERIOD_H1, 100, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
          }
