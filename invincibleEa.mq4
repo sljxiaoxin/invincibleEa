@@ -27,25 +27,25 @@ extern int       intMaxActiveItems    = 2;
 extern double    distance             = 5;      
 
 extern string    strUseStochEntryM5  = "Stoch entry m5";
-extern bool      isUse_StochEntryM5   = true;
+extern bool      isUse_StochEntryM5   = false;
 
 extern string    strUseStochEntryH1  = "Stoch entry H1";
-extern bool      isUse_StochEntryH1   = true;
+extern bool      isUse_StochEntryH1   = false;
 
-extern string    strUseMaEntryM5  = "MA entry m5";
-extern bool      isUse_MaEntryM5   = true;
+extern string    strUseMaEntryM15  = "MA entry m15";
+extern bool      isUse_MaEntryM15   = true;
 
 extern string    strUseMaEntryH1  = "MA entry H1";
-extern bool      isUse_MaEntryH1   = true;
+extern bool      isUse_MaEntryH1   = false;
 
 extern string    strUseTdiStochEntryM5  = "TDI + stoch entry m5";
-extern bool      isUse_TdiStochEntryM5   = true;
+extern bool      isUse_TdiStochEntryM5   = false;
 
 extern string    strUseTdiStochEntryH1  = "TDI + stoch entry H1";
-extern bool      isUse_TdiStochEntryH1   = true;
+extern bool      isUse_TdiStochEntryH1   = false;
 
 extern string    strUseOsMaDivStochEntryH1  = "osMa Divergence + stoch entry H1";
-extern bool      isUse_OsMaDivStochEntryH1   = true;
+extern bool      isUse_OsMaDivStochEntryH1   = false;
 
 extern string    strMarti  = "marti relation setting";
 extern int       gridSize  = 50;
@@ -69,7 +69,7 @@ int OnInit()
    st.intTP = intTP;
    st.intSL = intSL;
    st.distance = distance;
-   st.isUse_MaEntryM5 = isUse_MaEntryM5;
+   st.isUse_MaEntryM15 = isUse_MaEntryM15;
    st.isUse_MaEntryH1 = isUse_MaEntryH1;
    st.isUse_StochEntryM5 = isUse_StochEntryM5;
    st.isUse_StochEntryH1 = isUse_StochEntryH1;
