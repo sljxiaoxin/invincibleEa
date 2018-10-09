@@ -32,8 +32,8 @@ extern bool      isUse_StochEntryM5   = false;
 extern string    strUseStochEntryH1  = "Stoch entry H1";
 extern bool      isUse_StochEntryH1   = false;
 
-extern string    strUseMaEntryM15  = "MA entry m15";
-extern bool      isUse_MaEntryM15   = true;
+extern string    strUseMaEntryM5  = "MA entry m5";
+extern bool      isUse_MaEntryM5   = true;
 
 extern string    strUseMaEntryH1  = "MA entry H1";
 extern bool      isUse_MaEntryH1   = false;
@@ -69,7 +69,7 @@ int OnInit()
    st.intTP = intTP;
    st.intSL = intSL;
    st.distance = distance;
-   st.isUse_MaEntryM15 = isUse_MaEntryM15;
+   st.isUse_MaEntryM5 = isUse_MaEntryM5;
    st.isUse_MaEntryH1 = isUse_MaEntryH1;
    st.isUse_StochEntryM5 = isUse_StochEntryM5;
    st.isUse_StochEntryH1 = isUse_StochEntryH1;

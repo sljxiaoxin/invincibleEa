@@ -12,23 +12,23 @@ class CMa
 {  
    private:
       
-      int passM15;
-      string crossTypeM15; //up down
+      int passM5;
+      string crossTypeM5; //up down
       
       int passH1;
       string crossTypeH1; //up down
       
-      datetime m_EntrySignalM15Time;
+      datetime m_EntrySignalM5Time;
       datetime m_EntrySignalH1Time;
-      datetime m_ExitSignalM15Time;
+      datetime m_ExitSignalM5Time;
       datetime m_ExitSignalH1Time;
       
-      datetime m_FillDataM15Time;
+      datetime m_FillDataM5Time;
       datetime m_FillDataH1Time;
       
-      double m_Ma10M15[20];
-      double m_Ma30M15[20];
-      double m_Stoch100M15[20];
+      double m_Ma10M5[20];
+      double m_Ma30M5[20];
+      double m_Stoch100M5[20];
       
       double m_Ma10H1[20];
       double m_Ma30H1[20];
@@ -40,15 +40,15 @@ class CMa
    public:
    
       CMa(){
-         passM15 = 0;
-         crossTypeM15 = "none"; //up down
+         passM5 = 0;
+         crossTypeM5 = "none"; //up down
          passH1 = 0;
          crossTypeH1 = "none"; //up down
       };
-      Signal* EntrySignalM15(void);
+      Signal* EntrySignalM5(void);
       Signal* EntrySignalH1(void);
       
-      Signal* ExitSignalM15(void);
+      Signal* ExitSignalM5(void);
       Signal* ExitSignalH1(void);
       
 };
@@ -57,16 +57,16 @@ void CMa::FillData(int tf, datetime currDt)
 {
    int i;
    
-   if(tf == PERIOD_M15){
-      if(m_FillDataM15Time == currDt){
+   if(tf == PERIOD_M5){
+      if(m_FillDataM5Time == currDt){
       
       }else{
-         m_FillDataM15Time = currDt;
+         m_FillDataM5Time = currDt;
          for(i=0;i<20;i++){ 
-            m_Ma10M15[i] = iMA(NULL,PERIOD_M15,10,0,MODE_SMA,PRICE_CLOSE,i);
-            m_Ma30M15[i] = iMA(NULL,PERIOD_M15,30,0,MODE_SMA,PRICE_CLOSE,i);
+            m_Ma10M5[i] = iMA(NULL,PERIOD_M5,10,0,MODE_SMA,PRICE_CLOSE,i);
+            m_Ma30M5[i] = iMA(NULL,PERIOD_M5,30,0,MODE_SMA,PRICE_CLOSE,i);
             //m_Stoch14M5[i]  = iStochastic(NULL, PERIOD_M5, 14, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
-            m_Stoch100M15[i] = iStochastic(NULL, PERIOD_M15, 100, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
+            m_Stoch100M5[i] = iStochastic(NULL, PERIOD_M5, 100, 3, 3, MODE_SMA, 0, MODE_MAIN, i);
          }
       }
    }
@@ -86,7 +86,7 @@ void CMa::FillData(int tf, datetime currDt)
    
 }
 
-Signal* CMa::EntrySignalM15(void)
+Signal* CMa::EntrySignalM5(void)
 {
    Signal* sr = new Signal();
    sr.sign = -1;
@@ -95,39 +95,39 @@ Signal* CMa::EntrySignalM15(void)
    sr.strategy = "";
    sr.comment = "";
    
-   if(m_EntrySignalM15Time == iTime(NULL,PERIOD_M15,0)){
+   if(m_EntrySignalM5Time == iTime(NULL,PERIOD_M5,0)){
       
    }else{
-      m_EntrySignalM15Time = iTime(NULL,PERIOD_M15,0);
-      FillData(PERIOD_M15, m_EntrySignalM15Time);
-      passM15 += 1;
-      if(m_Ma10M15[1] > m_Ma30M15[1] && m_Ma10M15[2] < m_Ma30M15[2]){
-         crossTypeM15 = "up";
-         passM15 = 0;
+      m_EntrySignalM5Time = iTime(NULL,PERIOD_M5,0);
+      FillData(PERIOD_M5, m_EntrySignalM5Time);
+      passM5 += 1;
+      if(m_Ma10M5[1] > m_Ma30M5[1] && m_Ma10M5[2] < m_Ma30M5[2]){
+         crossTypeM5 = "up";
+         passM5 = 0;
       }
-      if(m_Ma10M15[1] < m_Ma30M15[1] && m_Ma10M15[2] > m_Ma30M15[2]){
-         crossTypeM15 = "down";
-         passM15 = 0;
+      if(m_Ma10M5[1] < m_Ma30M5[1] && m_Ma10M5[2] > m_Ma30M5[2]){
+         crossTypeM5 = "down";
+         passM5 = 0;
       }
-      if(crossTypeM15 == "up" && passM15<20 && m_Stoch100M15[1]>48){
+      if(crossTypeM5 == "up" && passM5<20 && m_Stoch100M5[1]>48){
          sr.sign     = OP_BUY;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "CMaM15";
-         sr.comment  = "CMaM15";
+         sr.strategy = "CMaM5";
+         sr.comment  = "CMaM5";
          
-         crossTypeM15 = "none";
-         passM15  = 0;
+         crossTypeM5 = "none";
+         passM5  = 0;
       }
-      if(crossTypeM15 == "down" && passM15<20 && m_Stoch100M15[1]<52){
+      if(crossTypeM5 == "down" && passM5<20 && m_Stoch100M5[1]<52){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "CMaM15";
-         sr.comment  = "CMaM15";
+         sr.strategy = "CMaM5";
+         sr.comment  = "CMaM5";
          
-         crossTypeM15 = "none";
-         passM15  = 0;
+         crossTypeM5 = "none";
+         passM5  = 0;
       }
    }
    
@@ -182,7 +182,7 @@ Signal* CMa::EntrySignalH1(void)
    return sr;
 }
 
-Signal* CMa::ExitSignalM15(void){
+Signal* CMa::ExitSignalM5(void){
    Signal* sr = new Signal();
    sr.sign = -1;
    sr.Level = -1;
@@ -190,25 +190,25 @@ Signal* CMa::ExitSignalM15(void){
    sr.strategy = "";
    sr.comment = "";
    
-   if(m_ExitSignalM15Time == iTime(NULL,PERIOD_M15,0)){
+   if(m_ExitSignalM5Time == iTime(NULL,PERIOD_M5,0)){
       
    }else{
-      m_ExitSignalM15Time = iTime(NULL,PERIOD_M15,0);
-      FillData(PERIOD_M15, m_ExitSignalM15Time);
+      m_ExitSignalM5Time = iTime(NULL,PERIOD_M5,0);
+      FillData(PERIOD_M5, m_ExitSignalM5Time);
       
-      if(m_Ma10M15[1] > m_Ma30M15[1] && m_Stoch100M15[1]>48){
+      if(m_Ma10M5[1] > m_Ma30M5[1] && m_Stoch100M5[1]>48){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
-         sr.strategy = "ExitSignalM15";
-         sr.comment  = "ExitSignalM15";
+         sr.strategy = "ExitSignalM5";
+         sr.comment  = "ExitSignalM5";
       }
-      if(m_Ma10M15[1] < m_Ma30M15[1] && m_Stoch100M15[1]<52){
+      if(m_Ma10M5[1] < m_Ma30M5[1] && m_Stoch100M5[1]<52){
             sr.sign     = OP_BUY;
             sr.Level    = 1;
             sr.unHedg   = false;
-            sr.strategy = "ExitSignalM15";
-            sr.comment  = "ExitSignalM15";
+            sr.strategy = "ExitSignalM5";
+            sr.comment  = "ExitSignalM5";
       }
    }
    return sr;
