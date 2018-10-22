@@ -25,7 +25,7 @@ class CMaOne
          isStochCrossOk = false;
       };
       void AddCol();
-      void Reset()
+      void Reset();
       void SetCross(string ct, double cp);
       bool IsCanOpenBuy();
       bool IsCanOpenSell();

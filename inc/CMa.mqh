@@ -8,7 +8,7 @@
 
 #include "structs.mqh";
 #include "CMaOne.mqh";
-
+#include "CTrade.mqh";
 class CMa
 {  
    private:
@@ -275,7 +275,7 @@ Signal* CMa::ExitSignalM5(void){
       m_ExitSignalM5Time = iTime(NULL,PERIOD_M5,0);
       FillData(PERIOD_M5, m_ExitSignalM5Time);
       
-      if(m_Stoch100M5[1]<46 || (m_Stoch100M5[1]>95 && Ask - m_Ma30M5[1]>30*oCTrade.GetPip())){
+      if(m_Stoch100M5[1]<53 || (m_Stoch100M5[1]>93 && Ask - m_Ma30M5[1]>25*oCTrade.GetPip())){
          sr.sign     = OP_BUY;
          sr.Level    = 1;
          sr.unHedg   = false;
@@ -283,7 +283,7 @@ Signal* CMa::ExitSignalM5(void){
          sr.comment  = "ExitSignalM5";
       }
       
-      if(m_Stoch100M5[1]>54 || (m_Stoch100M5[1]<5 && m_Ma30M5[1] -Bid>30*oCTrade.GetPip())){
+      if(m_Stoch100M5[1]>47 || (m_Stoch100M5[1]<7 && m_Ma30M5[1] -Bid>25*oCTrade.GetPip())){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
