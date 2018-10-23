@@ -144,15 +144,15 @@ Signal* CMa::EntrySignalM5(void)
          }
       }
       bool isOk;
-      if(oMaOneM5.IsCanOpenBuy()){
+      if(oMaOneM5.IsCanOpenBuy() && m_Stoch100M5[1]>50){
          isOk = false;
-         if(oMaOneM5.crossPass <8 && Ask - oMaOneM5.crossPrice<7*oCTrade.GetPip()){
+         if(oMaOneM5.crossPass <8 && Ask - oMaOneM5.crossPrice<5*oCTrade.GetPip()){
             isOk = true;
          }
          if(oMaOneM5.crossPass >=8 && Ask - oMaOneM5.crossPrice<25*oCTrade.GetPip() && Ask-m_Ma30M5[1]<4*oCTrade.GetPip()){
             isOk = true;
          }
-         if(oMaOneM5.crossPass <=15 && Ask - oMaOneM5.crossPrice<25*oCTrade.GetPip() && Ask-m_Ma10M5[1]<3*oCTrade.GetPip()){
+         if(oMaOneM5.crossPass >=15 && Ask - oMaOneM5.crossPrice<25*oCTrade.GetPip() && Ask-m_Ma10M5[1]<3*oCTrade.GetPip()){
             isOk = true;
          }
          if(isOk){
@@ -165,7 +165,7 @@ Signal* CMa::EntrySignalM5(void)
          }
       }
       
-      if(oMaOneM5.IsCanOpenSell()){
+      if(oMaOneM5.IsCanOpenSell() && m_Stoch100M5[1]<50){
          isOk = false;
          if(oMaOneM5.crossPass <8 && oMaOneM5.crossPrice -Bid<7*oCTrade.GetPip()){
             isOk = true;
@@ -173,7 +173,7 @@ Signal* CMa::EntrySignalM5(void)
          if(oMaOneM5.crossPass >=8 && oMaOneM5.crossPrice - Bid<25*oCTrade.GetPip() && m_Ma30M5[1] - Bid<4*oCTrade.GetPip()){
             isOk = true;
          }
-         if(oMaOneM5.crossPass <=15 && oMaOneM5.crossPrice - Bid<25*oCTrade.GetPip() && m_Ma10M5[1] - Bid<3*oCTrade.GetPip()){
+         if(oMaOneM5.crossPass >=15 && oMaOneM5.crossPrice - Bid<25*oCTrade.GetPip() && m_Ma10M5[1] - Bid<3*oCTrade.GetPip()){
             isOk = true;
          }
          if(isOk){
@@ -275,7 +275,7 @@ Signal* CMa::ExitSignalM5(void){
       m_ExitSignalM5Time = iTime(NULL,PERIOD_M5,0);
       FillData(PERIOD_M5, m_ExitSignalM5Time);
       
-      if(m_Stoch100M5[1]<53 || (m_Stoch100M5[1]>93 && Ask - m_Ma30M5[1]>25*oCTrade.GetPip())){
+      if( (m_Stoch100M5[2] < m_Stoch100M5[1] && m_Stoch100M5[2]<50) || (m_Stoch100M5[1]>93 && Ask - m_Ma30M5[1]>24*oCTrade.GetPip())){
          sr.sign     = OP_BUY;
          sr.Level    = 1;
          sr.unHedg   = false;
@@ -283,7 +283,7 @@ Signal* CMa::ExitSignalM5(void){
          sr.comment  = "ExitSignalM5";
       }
       
-      if(m_Stoch100M5[1]>47 || (m_Stoch100M5[1]<7 && m_Ma30M5[1] -Bid>25*oCTrade.GetPip())){
+      if((m_Stoch100M5[1] > m_Stoch100M5[2] && m_Stoch100M5[2]>50) || (m_Stoch100M5[1]<7 && m_Ma30M5[1] -Bid>24*oCTrade.GetPip())){
          sr.sign     = OP_SELL;
          sr.Level    = 1;
          sr.unHedg   = false;
